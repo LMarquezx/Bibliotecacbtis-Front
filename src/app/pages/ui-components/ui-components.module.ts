@@ -17,6 +17,7 @@ import { AppListsComponent } from './lists/lists.component';
 import { AppMenuComponent } from './menu/menu.component';
 import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { BooksComponent } from './books/books.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule,
   ],
   declarations: [
+    BooksComponent,
     AppBadgeComponent,
     AppChipsComponent,
     AppListsComponent,

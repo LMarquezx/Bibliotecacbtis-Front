@@ -10,6 +10,21 @@ export const navItems: NavItem[] = [
     route: '/dashboard',
   },
   {
+    displayName: 'Categorias',
+    iconName: 'list',
+    route: '/ui-components/books',
+  },
+  {
+    displayName: 'Prestamos',
+    iconName:'book_2',
+    route: '/prestamos',
+  },
+  {
+    displayName: 'Noticias',
+    iconName: 'news',
+    route: '/noticias',
+  },
+  {
     navCap: 'Ui Components',
   },
   {
