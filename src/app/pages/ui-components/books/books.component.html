@@ -8,22 +8,14 @@
               <mat-card-title>Listado de Categorias</mat-card-title>
             </mat-card-header>
             <mat-card-content class="b-t-1">
-              <mat-chip-listbox aria-label="Fish selection">
-                <mat-chip-option class="f-s-14" color="primary"
-                  >CIENCIAS BIOLOGICAS, QUIMICAS Y DE LA SALUD</mat-chip-option
-                >
-                <mat-chip-option class="f-s-14" color="accent">CIENCIAS FISICO-MATEMATICAS E INGENIERIAS</mat-chip-option>
-                <mat-chip-option class="f-s-14" color="warn" selected
-                  >CIENCIAS SOCIALES</mat-chip-option
-                >
-                <mat-chip-option class="f-s-14" color="primary"
-                  >HUMANIDADES Y ARTE</mat-chip-option
-                >
-                <mat-chip-option class="f-s-14" color="accent"
-                  >TECNOLOGIA</mat-chip-option
-                >
-                <mat-chip-option class="f-s-14" color="warn"
-                  >ADMINISTRACION Y GESTION</mat-chip-option>
+              <mat-chip-listbox aria-label="Seleccionar categoría">
+                <mat-chip-option
+                  *ngFor="let categoria of categorias"
+                  class="f-s-14"
+                  [color]="categoria.color"
+                  (click)="filterBooks(categoria.id)">
+                  {{ categoria.nombre }}
+                </mat-chip-option>
               </mat-chip-listbox>
 
               <mat-card appearance="outlined">

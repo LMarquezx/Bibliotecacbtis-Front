@@ -1,0 +1,21 @@
+<mat-card class="b-1 shadow-none">
+    <mat-card-header>
+      <mat-card-title>Prestamos</mat-card-title>
+    </mat-card-header>
+    <div class="container">
+        <div class="menu">
+          <button class="btn btn-primary" (click)="toggleFormulario()">Abrir formulario</button>
+          <button class="btn btn-info" (click)="toggleTabla()">Mostrar tabla</button>
+        </div>
+        
+        <div class="content">
+          <app-libro-prestamo *ngIf="mostrarFormulario"></app-libro-prestamo>
+          
+          <div *ngIf="mostrarTabla">
+            <h2>Tabla de Préstamos</h2>
+            <p>Aquí se mostraría la tabla de préstamos (implementación pendiente)</p>
+          </div>
+        </div>
+    </div>
+</mat-card>
+ 

@@ -19,6 +19,8 @@ import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BooksComponent } from './books/books.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { PrestamoComponent } from './prestamo/prestamo.component';
+import { LibroPrestamoComponent } from './libro-prestamo/libro-prestamo.component';
 
 @NgModule({
   imports: [
@@ -33,6 +35,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   ],
   declarations: [
     BooksComponent,
+    PrestamoComponent,
+    LibroPrestamoComponent,
     AppBadgeComponent,
     AppChipsComponent,
     AppListsComponent,

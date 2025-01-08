@@ -7,6 +7,7 @@ import { AppListsComponent } from './lists/lists.component';
 import { AppMenuComponent } from './menu/menu.component';
 import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { BooksComponent } from './books/books.component';
+import { PrestamoComponent } from './prestamo/prestamo.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -15,6 +16,10 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'books',
         component: BooksComponent,
+      },
+      {
+        path: 'prestamo',
+        component: PrestamoComponent
       },
       {
         path: 'badge',

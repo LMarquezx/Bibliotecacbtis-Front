@@ -23,7 +23,6 @@ export class BooksComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    console.log(this.paginator);
   }
 
   getLibros(): void {
@@ -37,4 +36,25 @@ export class BooksComponent implements AfterViewInit {
       },
     });
   }
+  filterBooks(catId: string): void {
+    this.librosService.filterByCategoria(catId).subscribe({
+      next: (response) => {
+        console.log('Libros encontrados:', response);
+        this.dataSource.data = response;
+      },
+      error: (err) => {
+        console.error('Error al filtrar libros:', err);
+      },
+    });
+  }
+
+  categorias = [
+    { id: '1', nombre: 'CIENCIAS BIOLOGICAS, QUIMICAS Y DE LA SALUD', color: 'primary' },
+    { id: '2', nombre: 'CIENCIAS FISICO-MATEMATICAS E INGENIERIAS', color: 'accent' },
+    { id: '3', nombre: 'CIENCIAS SOCIALES', color: 'warn' },
+    { id: '4', nombre: 'HUMANIDADES Y ARTE', color: 'primary' },
+    { id: '5', nombre: 'TECNOLOGIA', color: 'accent' },
+    { id: '6', nombre: 'ADMINISTRACION Y GESTION', color: 'warn' },
+  ];
 }
+

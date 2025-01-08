@@ -1,0 +1,59 @@
+<mat-card-content class="b-t-1">
+    <div class="container">
+        <h2>Solicitud de Préstamo de Libro</h2>
+        <form [formGroup]="prestamoForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="nombreCompleto">Nombre Completo</label>
+            <input type="text" id="nombreCompleto" formControlName="nombreCompleto" required>
+            <div class="error" *ngIf="prestamoForm.get('nombreCompleto')?.invalid && prestamoForm.get('nombreCompleto')?.touched">
+            Por favor, ingrese su nombre completo.
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="numeroControl">Número de Control</label>
+            <input type="text" id="numeroControl" formControlName="numeroControl" required>
+            <div class="error" *ngIf="prestamoForm.get('numeroControl')?.invalid && prestamoForm.get('numeroControl')?.touched">
+            Por favor, ingrese su número de control.
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="especialidad">Especialidad</label>
+            <input type="text" id="especialidad" formControlName="especialidad" required>
+            <div class="error" *ngIf="prestamoForm.get('especialidad')?.invalid && prestamoForm.get('especialidad')?.touched">
+            Por favor, ingrese su especialidad.
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="semestre">Semestre</label>
+            <input type="number" id="semestre" formControlName="semestre" min="1" max="12" required>
+            <div class="error" *ngIf="prestamoForm.get('semestre')?.invalid && prestamoForm.get('semestre')?.touched">
+            Por favor, ingrese un semestre válido (1-12).
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="libro">Libro</label>
+            <select id="libro" formControlName="libro" required>
+            <option value="">Seleccione un libro</option>
+            <option *ngFor="let libro of libros" [value]="libro">{{libro}}</option>
+            </select>
+            <div class="error" *ngIf="prestamoForm.get('libro')?.invalid && prestamoForm.get('libro')?.touched">
+            Por favor, seleccione un libro.
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="fechaDevolucion">Fecha de Devolución</label>
+            <input type="date" id="fechaDevolucion" formControlName="fechaDevolucion" required>
+            <div class="error" *ngIf="prestamoForm.get('fechaDevolucion')?.invalid && prestamoForm.get('fechaDevolucion')?.touched">
+            Por favor, seleccione una fecha de devolución.
+            </div>
+        </div>
+    
+        <button type="submit" [disabled]="prestamoForm.invalid">Solicitar Préstamo</button>
+        </form>
+    </div>
+</mat-card-content>
