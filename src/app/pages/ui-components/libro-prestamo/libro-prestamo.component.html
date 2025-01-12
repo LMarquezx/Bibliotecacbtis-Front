@@ -53,13 +53,13 @@
                 </div>
             </div>
 
-            <button type="submit" [disabled]="prestamoForm.invalid">Solicitar Préstamo</button>
+            <button type="submit" style="background-color: #bc955c; color: black;" [disabled]="prestamoForm.invalid">Solicitar Préstamo</button>
         </form>
 
         <h3 class="mt-5">Seleccionar Libro</h3>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Buscar por título:</span>
-            <input type="text" class="form-control" placeholder="Título" aria-label="Titulo"
+            <input type="text" class="form-control"  placeholder="Título" aria-label="Titulo"
                 aria-describedby="basic-addon1" (input)="onBuscarTitulo($event)">
         </div>
         <table class="table table-striped">
@@ -75,7 +75,7 @@
                     <td>{{ libro.id_libro }}</td>
                     <td>{{ libro.Titulo }}</td>
                     <td>
-                        <button class="btn btn-sm btn-info" (click)="seleccionarLibro(libro)">
+                        <button class="btn btn-sm" style="background-color: #bc955c; color: black;" (click)="seleccionarLibro(libro)">
                             Seleccionar
                         </button>
                     </td>
