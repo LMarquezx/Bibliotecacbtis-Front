@@ -1,59 +1,89 @@
-<mat-card-content class="b-t-1">
+<mat-card-content class="matCard">
     <div class="container">
-        <h2>Solicitud de Préstamo de Libro</h2>
+        <h2>Solicitud Préstamo de Libro</h2>
         <form [formGroup]="prestamoForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="nombreCompleto">Nombre Completo</label>
-            <input type="text" id="nombreCompleto" formControlName="nombreCompleto" required>
-            <div class="error" *ngIf="prestamoForm.get('nombreCompleto')?.invalid && prestamoForm.get('nombreCompleto')?.touched">
-            Por favor, ingrese su nombre completo.
+            <div class="form-group">
+                <label for="nombreCompleto">Nombre Completo</label>
+                <input type="text" id="nombreCompleto" formControlName="nombreCompleto" required>
+                <div class="error"
+                    *ngIf="prestamoForm.get('nombreCompleto')?.invalid && prestamoForm.get('nombreCompleto')?.touched">
+                    Por favor, ingrese su nombre completo.
+                </div>
             </div>
-        </div>
-    
-        <div class="form-group">
-            <label for="numeroControl">Número de Control</label>
-            <input type="text" id="numeroControl" formControlName="numeroControl" required>
-            <div class="error" *ngIf="prestamoForm.get('numeroControl')?.invalid && prestamoForm.get('numeroControl')?.touched">
-            Por favor, ingrese su número de control.
+
+            <div class="form-group">
+                <label for="numeroControl">Número de Control</label>
+                <input type="number" id="numeroControl" formControlName="noControl" required>
+                <div class="error"
+                    *ngIf="prestamoForm.get('numeroControl')?.invalid && prestamoForm.get('numeroControl')?.touched">
+                    Por favor, ingrese su número de control.
+                </div>
             </div>
-        </div>
-    
-        <div class="form-group">
-            <label for="especialidad">Especialidad</label>
-            <input type="text" id="especialidad" formControlName="especialidad" required>
-            <div class="error" *ngIf="prestamoForm.get('especialidad')?.invalid && prestamoForm.get('especialidad')?.touched">
-            Por favor, ingrese su especialidad.
+
+            <div class="form-group">
+                <label for="especialidad">Especialidad</label>
+                <input type="text" id="especialidad" formControlName="especialidad" required>
+                <div class="error"
+                    *ngIf="prestamoForm.get('especialidad')?.invalid && prestamoForm.get('especialidad')?.touched">
+                    Por favor, ingrese su especialidad.
+                </div>
             </div>
-        </div>
-    
-        <div class="form-group">
-            <label for="semestre">Semestre</label>
-            <input type="number" id="semestre" formControlName="semestre" min="1" max="12" required>
-            <div class="error" *ngIf="prestamoForm.get('semestre')?.invalid && prestamoForm.get('semestre')?.touched">
-            Por favor, ingrese un semestre válido (1-12).
+
+            <div class="form-group">
+                <label for="semestre">Semestre</label>
+                <input type="number" id="semestre" formControlName="semestre" min="1" max="12" required>
+                <div class="error"
+                    *ngIf="prestamoForm.get('semestre')?.invalid && prestamoForm.get('semestre')?.touched">
+                    Por favor, ingrese un semestre válido (1-12).
+                </div>
             </div>
-        </div>
-    
-        <div class="form-group">
-            <label for="libro">Libro</label>
-            <select id="libro" formControlName="libro" required>
-            <option value="">Seleccione un libro</option>
-            <option *ngFor="let libro of libros" [value]="libro">{{libro}}</option>
-            </select>
-            <div class="error" *ngIf="prestamoForm.get('libro')?.invalid && prestamoForm.get('libro')?.touched">
-            Por favor, seleccione un libro.
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label for="libro">Libro seleccionado</label>
+                    <input type="text" class="form-control" formControlName="tituloLibro" readonly>
+                </div>
             </div>
-        </div>
-    
-        <div class="form-group">
-            <label for="fechaDevolucion">Fecha de Devolución</label>
-            <input type="date" id="fechaDevolucion" formControlName="fechaDevolucion" required>
-            <div class="error" *ngIf="prestamoForm.get('fechaDevolucion')?.invalid && prestamoForm.get('fechaDevolucion')?.touched">
-            Por favor, seleccione una fecha de devolución.
+
+            <div class="form-group">
+                <label for="fechaDevolucion">Fecha de Devolución</label>
+                <input type="date" id="fechaDevolucion" formControlName="fechaDevolucion" required>
+                <div class="error"
+                    *ngIf="prestamoForm.get('fechaDevolucion')?.invalid && prestamoForm.get('fechaDevolucion')?.touched">
+                    Por favor, seleccione una fecha de devolución.
+                </div>
             </div>
-        </div>
-    
-        <button type="submit" [disabled]="prestamoForm.invalid">Solicitar Préstamo</button>
+
+            <button type="submit" [disabled]="prestamoForm.invalid">Solicitar Préstamo</button>
         </form>
+
+        <h3 class="mt-5">Seleccionar Libro</h3>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Buscar por título:</span>
+            <input type="text" class="form-control" placeholder="Título" aria-label="Titulo"
+                aria-describedby="basic-addon1" (input)="onBuscarTitulo($event)">
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let libro of librosPaginados">
+                    <td>{{ libro.id_libro }}</td>
+                    <td>{{ libro.Titulo }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info" (click)="seleccionarLibro(libro)">
+                            Seleccionar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <mat-paginator [length]="Libros.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
+        </mat-paginator>
     </div>
 </mat-card-content>

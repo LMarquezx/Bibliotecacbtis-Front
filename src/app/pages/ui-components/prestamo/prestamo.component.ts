@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LibrosService } from 'src/app/services/libros.service';
+import { Prestamo } from 'src/app/models/prestamo';
+import { MatPaginator } from '@angular/material/paginator';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-prestamo',
@@ -7,41 +11,90 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './prestamo.component.scss'
 })
 export class PrestamoComponent implements OnInit {
-  prestamoForm: FormGroup;
-  libros: string[] = ['Libro 1', 'Libro 2', 'Libro 3', 'Libro 4', 'Libro 5']; // Lista de ejemplo
 
-  constructor(private fb: FormBuilder) {
-    this.prestamoForm = this.fb.group({
-      nombreCompleto: ['', Validators.required],
-      numeroControl: ['', Validators.required],
-      especialidad: ['', Validators.required],
-      semestre: ['', [Validators.required, Validators.min(1), Validators.max(12)]],
-      libro: ['', Validators.required],
-      fechaDevolucion: ['', Validators.required]
+  prestamo: Prestamo[] = [];
+  prestamosPaginados: Prestamo[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  private searchSubject = new Subject<string>();
+
+  constructor(private readonly librosService: LibrosService) {}
+
+  ngOnInit(): void {
+    this.getPrestamos();
+
+    // Escuchar cambios en el campo de búsqueda
+    this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe((termino) => {
+      this.filtrarPrestamos(termino);
     });
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
+    this.paginator.page.subscribe(() => this.updatePrestamosPaginados());
   }
 
-  onSubmit() {
-    if (this.prestamoForm.valid) {
-      console.log(this.prestamoForm.value);
-      // Aquí puedes agregar la lógica para enviar los datos del formulario
+  onBuscarNombre(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchSubject.next(input.value); // Emitir el valor al Subject
+  }
+
+  filtrarPrestamos(termino: string): void {
+    if (!termino.trim()) {
+      this.librosService.getAllPrestamos().subscribe({
+        next: (data) => {
+          this.prestamo = data;
+          this.updatePrestamosPaginados();
+        },
+        error: (err) => {
+          console.error('Error al obtener el listado:', err);
+        },
+      });
     } else {
-      console.log('Formulario inválido');
+      this.librosService.filterPrestamo({ nombreCompleto: termino }).subscribe({
+        next: (data) => {
+          this.prestamo = data;
+          this.updatePrestamosPaginados();
+        },
+        error: (err) => {
+          console.error('Error al filtrar el listado:', err);
+        },
+      });
     }
   }
+
+  updatePrestamosPaginados() {
+    if (this.paginator) {
+      const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+      this.prestamosPaginados = this.prestamo.slice(startIndex, startIndex + this.paginator.pageSize);
+    }
+  }
+
+  getPrestamos(): void {
+    this.librosService.getAllPrestamos().subscribe({
+      next: (data) => {
+        this.prestamo = data;
+        this.updatePrestamosPaginados();
+        console.log('Prestamos obtenidos:', data);
+      },
+      error: (err) => {
+        console.error('Error al obtener Prestamos:', err);
+      },
+    });
+  }
+
   mostrarFormulario = false;
   mostrarTabla = false;
 
   toggleFormulario() {
     this.mostrarFormulario = !this.mostrarFormulario;
     this.mostrarTabla = false;
+    // Reinicia la búsqueda cuando se cierra el formulario
   }
-
+  
   toggleTabla() {
     this.mostrarTabla = !this.mostrarTabla;
     this.mostrarFormulario = false;
+    if (this.mostrarTabla) {
+      this.getPrestamos(); // Asegúrate de que la tabla y la búsqueda se inicien correctamente
+    }
   }
 }

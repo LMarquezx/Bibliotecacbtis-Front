@@ -24,7 +24,7 @@ export const navItems: NavItem[] = [
     iconName: 'news',
     route: '/noticias',
   },
-  {
+  /*{
     navCap: 'Ui Components',
   },
   {
@@ -77,5 +77,5 @@ export const navItems: NavItem[] = [
     displayName: 'Sample Page',
     iconName: 'aperture',
     route: '/extra/sample-page',
-  },
+  },*/
 ];

@@ -5,7 +5,7 @@
     <div class="container">
         <div class="menu">
           <button class="btn btn-primary" (click)="toggleFormulario()">Abrir formulario</button>
-          <button class="btn btn-info" (click)="toggleTabla()">Mostrar tabla</button>
+          <button class="btn btn-info" (click)="toggleTabla()">Listado de prestamos</button>
         </div>
         
         <div class="content">
@@ -13,7 +13,36 @@
           
           <div *ngIf="mostrarTabla">
             <h2>Tabla de Préstamos</h2>
-            <p>Aquí se mostraría la tabla de préstamos (implementación pendiente)</p>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Buscar por Nombre del Alumno:</span>
+              <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre"
+                  aria-describedby="basic-addon1" (input)="onBuscarNombre($event)">
+          </div>
+            <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>Nombre Completo</th>
+                      <th>No. Control</th>
+                      <th>Especialidad</th>
+                      <th>Semestre</th>
+                      <th>Titulo del Libro</th>
+                      <th>Fecha Devolucion</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let prestamo of prestamosPaginados">
+                      <td>{{ prestamo.nombreCompleto }}</td>
+                      <td>{{ prestamo.noControl }}</td>
+                      <td>{{ prestamo.especialidad }}</td>
+                      <td>{{ prestamo.semestre }}</td>
+                      <td>{{ prestamo.tituloLibro }}</td>
+                      <td>{{ prestamo.fechaDevolucion }}</td>
+                  </tr>
+              </tbody>
+          </table>
+  
+          <mat-paginator [length]="prestamo.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
+          </mat-paginator>
           </div>
         </div>
     </div>

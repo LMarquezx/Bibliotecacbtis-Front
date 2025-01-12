@@ -29,4 +29,24 @@ export class LibrosService {
   filterByCategoria(cat:string): Observable<any>{
     return this.http.post<any>(`${this.apiUrl}/libros/byCategoria`,{cat});
   }
+
+  getLibrosPrestamos(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/libros/prestamo`);
+  }
+
+  createPrestamo(prestamo:any):Observable<any>{
+    return this.http.post<any>(`${this.apiUrl}/prestamo`,prestamo);
+  }
+
+  getAllPrestamos(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/prestamos/all`);
+  }
+
+  filterPrestamo(Prestamo:any):Observable<any>{
+    return this.http.post<any>(`${this.apiUrl}/prestamos/byName`,Prestamo);
+  }
+
+  filtrarLibroPrestamo(libroPrestamo:any):Observable<any>{
+    return this.http.post<any>(`${this.apiUrl}/libros/filterName`,libroPrestamo);
+  }
 }

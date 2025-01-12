@@ -21,7 +21,7 @@ export const UiComponentsRoutes: Routes = [
         path: 'prestamo',
         component: PrestamoComponent
       },
-      {
+      /*{
         path: 'badge',
         component: AppBadgeComponent,
       },
@@ -40,7 +40,7 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'tooltips',
         component: AppTooltipsComponent,
-      },
+      },*/
     ],
   },
 ];
