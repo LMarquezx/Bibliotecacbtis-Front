@@ -19,11 +19,6 @@ export const navItems: NavItem[] = [
     iconName:'book_2',
     route: '/ui-components/prestamo',
   },
-  {
-    displayName: 'Noticias',
-    iconName: 'news',
-    route: '/noticias',
-  },
   /*{
     navCap: 'Ui Components',
   },
